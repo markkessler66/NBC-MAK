@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Data / runtime artifacts
+backend/data/
+*.db
+*.sqlite3
+*.log
+
+# Node
+node_modules/
+frontend/dist/
+frontend/debug-*.png
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Local visual-check screenshots
+frontend/shots/

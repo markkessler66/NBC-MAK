@@ -1,0 +1,31 @@
+services:
+  weatherlab:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - weatherlab-data:/app/backend/data
+    environment:
+      # Uncomment to use PostgreSQL instead of SQLite:
+      # WLAB_DB_URL: postgresql+psycopg://weatherlab:weatherlab@db:5432/weatherlab
+      WLAB_HOME_NAME: "Frisco, TX"
+      WLAB_HOME_LAT: "33.1507"
+      WLAB_HOME_LON: "-96.8236"
+    restart: unless-stopped
+    # depends_on:
+    #   - db
+
+  # Optional PostgreSQL/PostGIS metadata store (spec section 14). SQLite is the
+  # default; switch WLAB_DB_URL above and add psycopg to requirements to use it.
+  # db:
+  #   image: postgis/postgis:16-3.4
+  #   environment:
+  #     POSTGRES_USER: weatherlab
+  #     POSTGRES_PASSWORD: weatherlab
+  #     POSTGRES_DB: weatherlab
+  #   volumes:
+  #     - weatherlab-pg:/var/lib/postgresql/data
+
+volumes:
+  weatherlab-data:
+  # weatherlab-pg:

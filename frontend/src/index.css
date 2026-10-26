@@ -1,0 +1,131 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@theme {
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "Cascadia Code", "Consolas", ui-monospace, monospace;
+}
+
+body {
+  @apply bg-slate-950 text-slate-200 antialiased;
+}
+
+@layer components {
+  .card {
+    @apply bg-slate-900/70 border border-slate-800 rounded-xl;
+  }
+  .card-title {
+    @apply text-[11px] font-semibold tracking-widest uppercase text-slate-400;
+  }
+  .stat-label {
+    @apply text-[11px] uppercase tracking-wide text-slate-500;
+  }
+}
+
+/* MapLibre ships a light popup in 12px Helvetica, which is both unreadable at
+   that size and jarring on the dark basemap. Match the ECharts tooltip palette
+   used by the charts instead. */
+.maplibregl-map {
+  font-family: var(--font-sans);
+}
+.maplibregl-popup-content {
+  background: #0f172af2;
+  color: #e2e8f0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 10px 28px -8px rgb(0 0 0 / 0.75);
+}
+.maplibregl-popup-content strong,
+.maplibregl-popup-content b {
+  color: #f8fafc;
+  font-weight: 600;
+}
+.maplibregl-popup-close-button {
+  color: #94a3b8;
+  font-size: 16px;
+  padding: 0 5px;
+}
+.maplibregl-popup-close-button:hover {
+  background: transparent;
+  color: #e2e8f0;
+}
+/* The tip is a CSS triangle built from border colours, so each anchor needs
+   its own side recoloured to match the panel. */
+.maplibregl-popup-anchor-top .maplibregl-popup-tip,
+.maplibregl-popup-anchor-top-left .maplibregl-popup-tip,
+.maplibregl-popup-anchor-top-right .maplibregl-popup-tip {
+  border-bottom-color: #334155;
+}
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip,
+.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip,
+.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
+  border-top-color: #334155;
+}
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  border-right-color: #334155;
+}
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  border-left-color: #334155;
+}
+
+/* Storm markers. Built as DOM elements rather than symbol layers so the basin
+   map needs no glyph server for the forecast-hour labels. */
+.storm-center {
+  width: var(--size, 14px);
+  height: var(--size, 14px);
+  border-radius: 50%;
+  background: var(--dot, #94a3b8);
+  border: 2px solid #020618;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--dot, #94a3b8) 45%, transparent),
+    0 0 14px -2px var(--dot, #94a3b8);
+  cursor: pointer;
+  transition: transform 120ms ease;
+}
+.storm-center:hover {
+  transform: scale(1.18);
+}
+.storm-fcst-point {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: #020618e6;
+  border: 1.5px solid var(--dot, #94a3b8);
+  color: #e2e8f0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: center;
+  cursor: default;
+}
+.storm-fcst-point[data-post="true"] {
+  border-style: dashed;
+  color: #94a3b8;
+}
+
+/* Readable, dark attribution/control chrome to match. */
+.maplibregl-ctrl-attrib.maplibregl-compact {
+  background: #0f172acc;
+}
+.maplibregl-ctrl-attrib a,
+.maplibregl-ctrl-attrib {
+  color: #94a3b8;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 5px;
+}
